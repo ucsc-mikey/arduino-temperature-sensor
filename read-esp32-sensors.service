@@ -1,0 +1,11 @@
+[Unit]
+Description=ESP32 Temperature Sensor
+
+[Service]
+Type=simple
+ExecStart=/bin/python3.6 /usr/local/bin/ReadTemperatureData.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

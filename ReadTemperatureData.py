@@ -11,6 +11,8 @@ kSerialPort = "/dev/ttyACM0"
 # Number of seconds to wait before complaining about not getting a reading
 kNoReadingWarning = 600
 
+kSaveFile = "/var/run/temperature-sensor.json"
+
 vLastSuccess = datetime.datetime.now()
 
 vSerial = serial.Serial(kSerialPort, baudrate=9600, timeout=5)
@@ -55,4 +57,10 @@ while True:
 
     # We got good data!
     vLastSuccess = datetime.datetime.now()
+    vJson['lastUpdate'] = int(vLastSuccess.timestamp())
+    vJson['lastUpdatePretty'] = vLastSuccess.strftime("%c")
     print(vJson)
+
+    with open(kSaveFile, 'w') as vFD:
+        json.dump(vJson, vFD)
+    
